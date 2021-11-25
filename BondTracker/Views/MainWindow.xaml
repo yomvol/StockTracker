@@ -1,0 +1,52 @@
+﻿<Window x:Class="BondTracker.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BondTracker"
+        xmlns:oxy="http://oxyplot.org/wpf"
+        mc:Ignorable="d"
+        Title="BondTracker" Height="768" Width="1366" Background="DimGray">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Background" Value="DarkGray"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <oxy:PlotView Model="{Binding MyModel}" Grid.Row="1" Grid.Column="1"
+        Grid.ColumnSpan="5" Margin="0, 0, 0, 10"/>
+
+        <Button Grid.Row="2" Grid.Column="1" Content="Add"></Button>
+        <Button Grid.Row="2" Grid.Column="2" Content="Remove"></Button>
+        <Button Grid.Row="2" Grid.Column="3" Content="Three more"></Button>
+        <Button Grid.Row="2" Grid.Column="4" Content="buttons to look"></Button>
+        <Button Grid.Row="2" Grid.Column="5" Content="more decent"></Button>
+        <DataGrid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5"
+        AutoGenerateColumns="True" x:Name="InfoPanel" RowBackground="ForestGreen"
+        AlternatingRowBackground="Aqua" IsReadOnly="True"
+        SelectionUnit="Cell" IsSynchronizedWithCurrentItem="True" FontSize="16" >
+        </DataGrid>
+
+    </Grid>
+</Window>
