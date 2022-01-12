@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BondTracker"
+        xmlns:vmnspc="clr-namespace:BondTracker.ViewModels"
         xmlns:oxy="http://oxyplot.org/wpf"
         mc:Ignorable="d"
         Title="BondTracker" Height="768" Width="1366" Background="DimGray">
@@ -13,6 +14,7 @@
             <Setter Property="Background" Value="DarkGray"/>
             <Setter Property="FontWeight" Value="Bold"/>
         </Style>
+        
     </Window.Resources>
     
     <Grid>
@@ -32,21 +34,22 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
-        <oxy:PlotView Model="{Binding MyModel}" Grid.Row="1" Grid.Column="1"
+        <oxy:PlotView Model="{Binding Path=StockChart}" Grid.Row="1" Grid.Column="1"
         Grid.ColumnSpan="5" Margin="0, 0, 0, 10"/>
 
-        <Button Grid.Row="2" Grid.Column="1" Content="Add"></Button>
-        <Button Grid.Row="2" Grid.Column="2" Content="Remove"></Button>
-        <Button Grid.Row="2" Grid.Column="3" Content="Three more"></Button>
-        <Button Grid.Row="2" Grid.Column="4" Content="buttons to look"></Button>
-        <Button Grid.Row="2" Grid.Column="5" Content="more decent"></Button>
-        <DataGrid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5"
+        <Button Grid.Row="3" Grid.Column="1" Content="Add"></Button>
+        <Button Grid.Row="3" Grid.Column="2" Content="Remove"></Button>
+        <Button Grid.Row="3" Grid.Column="3" Content="Three more"></Button>
+        <Button Grid.Row="3" Grid.Column="4" Content="buttons to look"></Button>
+        <Button Grid.Row="3" Grid.Column="5" Content="more decent"></Button>
+        <DataGrid Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="5"
         AutoGenerateColumns="True" x:Name="InfoPanel" RowBackground="ForestGreen"
         AlternatingRowBackground="Aqua" IsReadOnly="True"
-        SelectionUnit="Cell" IsSynchronizedWithCurrentItem="True" FontSize="16" >
+        SelectionUnit="Cell" FontSize="16" >
         </DataGrid>
-
+        <TextBlock Grid.Row="2" Grid.Column="5" Text="{Binding Source=, Path=DebuggingMessage, Mode=OneWay }" />
     </Grid>
 </Window>
