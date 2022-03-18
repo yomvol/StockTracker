@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BondTracker"
-        xmlns:vmnspc="clr-namespace:BondTracker.ViewModels"
+        xmlns:vm="clr-namespace:BondTracker.ViewModels"
         xmlns:oxy="http://oxyplot.org/wpf"
         mc:Ignorable="d"
         Title="BondTracker" Height="768" Width="1366" Background="DimGray">
@@ -50,6 +50,6 @@
         AlternatingRowBackground="Aqua" IsReadOnly="True"
         SelectionUnit="Cell" FontSize="16" >
         </DataGrid>
-        <TextBlock Grid.Row="2" Grid.Column="5" Text="{Binding Source=, Path=DebuggingMessage, Mode=OneWay }" />
+        <TextBlock Name="MessageLine" Grid.Row="2" Grid.Column="5" FontSize="18" HorizontalAlignment="Center" />
     </Grid>
 </Window>

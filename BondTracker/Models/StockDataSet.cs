@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 using System.Xml;
+using System.Xml.Serialization;
 using OxyPlot;
 using OxyPlot.Axes;
 using DataHarvester;
+using System.Threading;
 using System.Threading.Tasks;
+using System.IO.MemoryMappedFiles;
 
 namespace BondTracker.Models
 {
@@ -17,10 +21,7 @@ namespace BondTracker.Models
         private DateTime StartDate;
         private DateTime EndDate;
         private TimeSpan PlotMode;
-        private Queue<string> FilesToBeParsed;
-        private bool IsAnswered = false;
-        private bool IsSuccess = false;
-        private string message;
+        
         public StockDataSet()
         {
             CurrentDate = DateTime.Today;
@@ -28,53 +29,68 @@ namespace BondTracker.Models
             StartDate = EndDate.AddYears(-1);
             PlotMode = EndDate - StartDate;
             DataPoints = new List<DataPoint>();
-            FilesToBeParsed = null;
         }
 
         public bool PopulateData(Stock input, ref string s)
         {
             this.Item = input;
-            StartDownloading += Program.HandleStartDownloadingEvent;
-            Program.Finish += HandleDataHarvesterEvent;
-            StartDownloading += this.Handle_SD_Event;
-            System.Diagnostics.Stopwatch timer = new System.Diagnostics.Stopwatch();
-            OnStartDownloading();
-            timer.Start();
-            while (timer.ElapsedMilliseconds < 60000)
+            Task.WaitAll(new Task[] { Task.Delay(2000) });
+            EventWaitHandle DownloadSyncEvent;
+            try
             {
-                if (IsAnswered)
-                {
-                    break;
-                }
-                else
-                    Task.WaitAll(new Task[] { Task.Delay(2000) }); // a 2 second delay to ease condition checking bouncing
+                DownloadSyncEvent = EventWaitHandle.OpenExisting(@"Local\MyDownloadSyncEvent");
             }
-            timer.Stop();
-            if (!IsAnswered)
+            catch (WaitHandleCannotBeOpenedException)
+            {
+                throw;
+            }
+            DownloadSyncEvent.Set();
+            DownloadSyncEvent.Reset();
+            DownloadSyncEvent.WaitOne(100000);
+
+            Program.HarvestOutput outcome;
+            using (MemoryMappedFile mmf = MemoryMappedFile.OpenExisting("my_map"))
+            {
+                Mutex mutex = Mutex.OpenExisting("forkInDorm");
+                mutex.WaitOne();
+                using (MemoryMappedViewStream view_stream = mmf.CreateViewStream())
+                {
+                    var serializer = new XmlSerializer(typeof(Program.HarvestOutput));
+                    StreamReader S_reader = new StreamReader(view_stream);
+                    outcome = (Program.HarvestOutput)serializer.Deserialize(S_reader);
+                    
+                }
+            }
+            if (!outcome.IsAnswered)
             {
                 // add message handling
                 s = "Модуль загрузки не отвечает. Проверьте целостность файлов программы.";
                 return false;
             }
-            if (!IsSuccess)
+            if (!outcome.IsSuccess)
             {
                 // add message handling
-                s = message;
+                s = outcome.message;
                 return false;
             }
             // It`s time to parse data from downloaded files
             // First In - First Out, firstly get older data
-            if (FilesToBeParsed == null)
+            if (outcome.FilesToBeParsed == null)
             {
                 // add message handling
                 s = "Модуль загрузки отчитался об успехе, но не послал пути загруженных файлов.";
                 return false;
             }
-            int total_number = FilesToBeParsed.Count;
+            int total_number = outcome.FilesToBeParsed.Count;
             XmlTextReader reader;
+            bool IsStartFound = false;
             for (int i = 0; i < total_number; i++)
             {
-                reader = new XmlTextReader(FilesToBeParsed.Dequeue());
+                if (IsStartFound == false)
+                    i = 0;
+                if (outcome.FilesToBeParsed.Count == 0)
+                    break;
+                reader = new XmlTextReader(outcome.FilesToBeParsed.Dequeue());
                 while (reader.ReadToFollowing("data"))
                 {
                     if (reader.GetAttribute("id") != "history")
@@ -88,19 +104,30 @@ namespace BondTracker.Models
                     if (i == 0)
                     {
                         // Data earlier than starting date must be skipped
+                        DateTime dt = DateTime.ParseExact(reader.GetAttribute("TRADEDATE"), "yyyy-mm-dd", System.Globalization.CultureInfo.InvariantCulture);
                         int result = DateTime.ParseExact(reader.GetAttribute("TRADEDATE"), "yyyy-mm-dd", System.Globalization.CultureInfo.InvariantCulture).CompareTo(StartDate);
                         while (result < 0)
                         {
-                            reader.ReadToNextSibling("row");
-                            result = DateTime.ParseExact(reader.GetAttribute("TRADEDATE"), "yyyy-mm-dd", System.Globalization.CultureInfo.InvariantCulture).CompareTo(StartDate);
+                            if (reader.ReadToNextSibling("row"))
+                                result = DateTime.ParseExact(reader.GetAttribute("TRADEDATE"), "yyyy-mm-dd", System.Globalization.CultureInfo.InvariantCulture).CompareTo(StartDate);
+                            else
+                                break;
                         }
+                        if (result >= 0)
+                            IsStartFound = true;
+                        else
+                            continue;
                     }
                     DateTime date_x;
                     double close_price_y;
                     while(reader.ReadToNextSibling("row"))
                     {
                         date_x = DateTime.ParseExact(reader.GetAttribute("TRADEDATE"), "yyyy-mm-dd", System.Globalization.CultureInfo.InvariantCulture);
-                        close_price_y = Convert.ToDouble(reader.GetAttribute("CLOSE"));
+                        string str = reader.GetAttribute("CLOSE");
+                        if (str != string.Empty)
+                            close_price_y = Double.Parse(str, System.Globalization.CultureInfo.InvariantCulture);
+                        else
+                            continue;
                         DataPoints.Add(DateTimeAxis.CreateDataPoint(date_x, close_price_y));
                     }
                     reader.Dispose();
@@ -109,49 +136,6 @@ namespace BondTracker.Models
             }
             s = "Полный успех!";
             return true;
-        }
-
-        public event EventHandler StartDownloading;
-        private void OnStartDownloading()
-        {
-            EventHandler RaiseStart = StartDownloading;
-            if (RaiseStart != null)
-            {
-                StartDownloading(this, null);
-            }
-        }
-
-        private void Handle_SD_Event(object sender, EventArgs e) // Testing event handling
-        {
-            EndDate = DateTime.Today.AddYears(-10);
-        }
-
-        private void HandleDataHarvesterEvent(object sender, OutcomeEventArgs e)
-        {
-            IsAnswered = true;
-            if (!Item.Name.Equals(e.Name))
-                message = "Ошибка: Имена загруженной и выбранной бумаги не совпадают.";
-            else
-            {
-                if (e.Result == HarvestOutcomes.Success)
-                {
-                    IsSuccess = true;
-                    FilesToBeParsed = e.FilePaths;
-                    message = "Данные успешно загружены.";
-                }
-                else if (e.Result == HarvestOutcomes.Error_Web_General_Info)
-                    message = "Ошибка: Не удалось загрузить общую информацию об этой бумаге. Проверьте, есть ли она в листинге биржи. Проверьте ваше подключение к сети.";
-                else if (e.Result == HarvestOutcomes.Error_Web_History_Zero_Index)
-                    message = "Ошибка: Не удалось загрузить историческую информацию об этой бумаге.";
-                else if (e.Result == HarvestOutcomes.Error_Web_History_Last_Page)
-                    message = "Ошибка: Не удалось загрузить последнюю историческую информацию об этой бумаге.";
-                else if (e.Result == HarvestOutcomes.Error_Cursor_Is_Not_Found)
-                    message = "Ошибка: Ошибка чтения файла с исторической информацией. Проверьте структуру загруженного файла.";
-                else if (e.Result == HarvestOutcomes.Error_Calc_Last_Page_Index)
-                    message = "Ошибка: Историческую информацию об этой бумаге удалось загрузить, но фвйл имеет нетипичный механизм связи с родстсвенными файлами. Проверьте структуру загруженного файла.";
-                else
-                    message = "Неизвестная ошибка.";
-            }
         }
     }
 }

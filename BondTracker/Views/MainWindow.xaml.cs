@@ -27,7 +27,11 @@ namespace BondTracker.Views
             InitializeComponent();
             main_view_model = new MainViewModel();
             DataContext = main_view_model.manager;
-            //InfoPanel.ItemsSource = _main.LoadDataOnStocksCollection();
+            Binding binding = new Binding("DebuggingMessage");
+            binding.Source = main_view_model;
+            binding.Mode = BindingMode.OneWay;
+            MessageLine.SetBinding(TextBlock.TextProperty, binding);
+            InfoPanel.ItemsSource = main_view_model.LoadDataOnStocksCollection();
         }
     }
 }

@@ -31,7 +31,6 @@ namespace BondTracker.ViewModels
         }
 
         private string _message;
-
         public string DebuggingMessage
         {
             get
@@ -45,7 +44,7 @@ namespace BondTracker.ViewModels
             set
             {
                 _message = value;
-                OnPropertyChanged("DebuggingMessage"); // Probably INotifyPropertyChanged is excessive now, but maybe is going to be useful later
+                OnPropertyChanged("DebuggingMessage");
             }
         }
 
@@ -53,7 +52,6 @@ namespace BondTracker.ViewModels
         {
             manager = new ManagerModel();
             DebuggingMessage = manager.Message;
-            //DebuggingMessage = "Debugging";
         }
     }
 }
