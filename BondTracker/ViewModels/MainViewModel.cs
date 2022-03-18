@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using OxyPlot;
-using OxyPlot.Series;
 using BondTracker.Models;
 
 namespace BondTracker.ViewModels
 {
-    class MainViewModel
+    class MainViewModel : ObservableObject
     {
+        public ManagerModel manager;
         public List<Stock> LoadDataOnStocksCollection()
         {
             List<Stock> stocks = new List<Stock>();
@@ -30,11 +29,29 @@ namespace BondTracker.ViewModels
 
             return stocks;
         }
-        public PlotModel MyModel { get; private set; }
+
+        private string _message;
+        public string DebuggingMessage
+        {
+            get
+            {
+                if (_message == "")
+                    return "Empty";
+                else
+                    return _message;
+            }
+            
+            set
+            {
+                _message = value;
+                OnPropertyChanged("DebuggingMessage");
+            }
+        }
+
         public MainViewModel()
         {
-            this.MyModel = new PlotModel{ Title = "Example1" };
-            this.MyModel.Series.Add(new FunctionSeries(Math.Cos, 0, 10, 0.1, "cos(x)"));
+            manager = new ManagerModel();
+            DebuggingMessage = manager.Message;
         }
     }
 }

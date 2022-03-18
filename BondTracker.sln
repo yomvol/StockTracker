@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BondTracker", "BondTracker\BondTracker.csproj", "{DB95CA01-0486-4578-9F38-183A6E31F0C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BondTracker", "BondTracker\BondTracker.csproj", "{DB95CA01-0486-4578-9F38-183A6E31F0C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataHarvester", "DataHarvester\DataHarvester.csproj", "{A3D89725-EF93-4927-B897-D83D7C1546A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{DB95CA01-0486-4578-9F38-183A6E31F0C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB95CA01-0486-4578-9F38-183A6E31F0C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB95CA01-0486-4578-9F38-183A6E31F0C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3D89725-EF93-4927-B897-D83D7C1546A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3D89725-EF93-4927-B897-D83D7C1546A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3D89725-EF93-4927-B897-D83D7C1546A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3D89725-EF93-4927-B897-D83D7C1546A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

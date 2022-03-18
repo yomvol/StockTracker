@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<document>
+  <data id="securities">
+    <metadata>
+      <columns>
+        <column name="SECID" type="string" bytes="36" max_size="0" />
+        <column name="BOARDID" type="string" bytes="12" max_size="0" />
+        <column name="SHORTNAME" type="string" bytes="30" max_size="0" />
+        <column name="PREVPRICE" type="double" />
+        <column name="LOTSIZE" type="int32" />
+        <column name="FACEVALUE" type="double" />
+        <column name="STATUS" type="string" bytes="3" max_size="0" />
+        <column name="BOARDNAME" type="string" bytes="381" max_size="0" />
+        <column name="DECIMALS" type="int32" />
+        <column name="SECNAME" type="string" bytes="90" max_size="0" />
+        <column name="REMARKS" type="string" bytes="24" max_size="0" />
+        <column name="MARKETCODE" type="string" bytes="12" max_size="0" />
+        <column name="INSTRID" type="string" bytes="12" max_size="0" />
+        <column name="SECTORID" type="string" bytes="12" max_size="0" />
+        <column name="MINSTEP" type="double" />
+        <column name="PREVWAPRICE" type="double" />
+        <column name="FACEUNIT" type="string" bytes="12" max_size="0" />
+        <column name="PREVDATE" type="date" bytes="10" max_size="0" />
+        <column name="ISSUESIZE" type="int64" />
+        <column name="ISIN" type="string" bytes="36" max_size="0" />
+        <column name="LATNAME" type="string" bytes="90" max_size="0" />
+        <column name="REGNUMBER" type="string" bytes="90" max_size="0" />
+        <column name="PREVLEGALCLOSEPRICE" type="double" />
+        <column name="PREVADMITTEDQUOTE" type="double" />
+        <column name="CURRENCYID" type="string" bytes="12" max_size="0" />
+        <column name="SECTYPE" type="string" bytes="3" max_size="0" />
+        <column name="LISTLEVEL" type="int32" />
+        <column name="SETTLEDATE" type="date" bytes="10" max_size="0" />
+      </columns>
+    </metadata>
+    <rows>
+      <row SECID="YNDX" BOARDID="TQBR" SHORTNAME="Yandex clA" PREVPRICE="3953.2" LOTSIZE="1" FACEVALUE="0.01" STATUS="A" BOARDNAME="Т+: Акции и ДР - безадрес." DECIMALS="1" SECNAME="PLLC Yandex N.V. class A shs" REMARKS="" MARKETCODE="FNDT" INSTRID="EQIN" SECTORID="" MINSTEP="0.2" PREVWAPRICE="3784.6" FACEUNIT="EUR" PREVDATE="2022-02-15" ISSUESIZE="323800479" ISIN="NL0009805522" LATNAME="PLLC Yandex N.V." REGNUMBER="" PREVLEGALCLOSEPRICE="3920" PREVADMITTEDQUOTE="3920" CURRENCYID="SUR" SECTYPE="1" LISTLEVEL="1" SETTLEDATE="2022-02-18" />
+    </rows>
+  </data>
+  <data id="marketdata">
+    <metadata>
+      <columns>
+        <column name="SECID" type="string" bytes="36" max_size="0" />
+        <column name="BOARDID" type="string" bytes="12" max_size="0" />
+        <column name="BID" type="double" />
+        <column name="BIDDEPTH" type="undefined" bytes="0" max_size="0" />
+        <column name="OFFER" type="double" />
+        <column name="OFFERDEPTH" type="undefined" bytes="0" max_size="0" />
+        <column name="SPREAD" type="double" />
+        <column name="BIDDEPTHT" type="int32" />
+        <column name="OFFERDEPTHT" type="int32" />
+        <column name="OPEN" type="double" />
+        <column name="LOW" type="double" />
+        <column name="HIGH" type="double" />
+        <column name="LAST" type="double" />
+        <column name="LASTCHANGE" type="double" />
+        <column name="LASTCHANGEPRCNT" type="double" />
+        <column name="QTY" type="int32" />
+        <column name="VALUE" type="double" />
+        <column name="VALUE_USD" type="double" />
+        <column name="WAPRICE" type="double" />
+        <column name="LASTCNGTOLASTWAPRICE" type="double" />
+        <column name="WAPTOPREVWAPRICEPRCNT" type="double" />
+        <column name="WAPTOPREVWAPRICE" type="double" />
+        <column name="CLOSEPRICE" type="double" />
+        <column name="MARKETPRICETODAY" type="double" />
+        <column name="MARKETPRICE" type="double" />
+        <column name="LASTTOPREVPRICE" type="double" />
+        <column name="NUMTRADES" type="int32" />
+        <column name="VOLTODAY" type="int64" />
+        <column name="VALTODAY" type="int64" />
+        <column name="VALTODAY_USD" type="int64" />
+        <column name="ETFSETTLEPRICE" type="double" />
+        <column name="TRADINGSTATUS" type="string" bytes="3" max_size="0" />
+        <column name="UPDATETIME" type="time" bytes="10" max_size="0" />
+        <column name="ADMITTEDQUOTE" type="double" />
+        <column name="LASTBID" type="undefined" bytes="0" max_size="0" />
+        <column name="LASTOFFER" type="undefined" bytes="0" max_size="0" />
+        <column name="LCLOSEPRICE" type="double" />
+        <column name="LCURRENTPRICE" type="double" />
+        <column name="MARKETPRICE2" type="double" />
+        <column name="NUMBIDS" type="undefined" bytes="0" max_size="0" />
+        <column name="NUMOFFERS" type="undefined" bytes="0" max_size="0" />
+        <column name="CHANGE" type="double" />
+        <column name="TIME" type="time" bytes="10" max_size="0" />
+        <column name="HIGHBID" type="undefined" bytes="0" max_size="0" />
+        <column name="LOWOFFER" type="undefined" bytes="0" max_size="0" />
+        <column name="PRICEMINUSPREVWAPRICE" type="double" />
+        <column name="OPENPERIODPRICE" type="double" />
+        <column name="SEQNUM" type="int64" />
+        <column name="SYSTIME" type="datetime" bytes="19" max_size="0" />
+        <column name="CLOSINGAUCTIONPRICE" type="double" />
+        <column name="CLOSINGAUCTIONVOLUME" type="double" />
+        <column name="ISSUECAPITALIZATION" type="double" />
+        <column name="ISSUECAPITALIZATION_UPDATETIME" type="time" bytes="10" max_size="0" />
+        <column name="ETFSETTLECURRENCY" type="string" bytes="18" max_size="0" />
+        <column name="VALTODAY_RUR" type="int64" />
+        <column name="TRADINGSESSION" type="string" bytes="3" max_size="0" />
+      </columns>
+    </metadata>
+    <rows>
+      <row SECID="YNDX" BOARDID="TQBR" BID="3984.4" BIDDEPTH="" OFFER="3984.6" OFFERDEPTH="" SPREAD="0.2" BIDDEPTHT="105031" OFFERDEPTHT="76388" OPEN="3981" LOW="3893" HIGH="4184.4" LAST="3985" LASTCHANGE="1" LASTCHANGEPRCNT="0.03" QTY="140" VALUE="557900.00" VALUE_USD="7324.79" WAPRICE="4032.8" LASTCNGTOLASTWAPRICE="200.4" WAPTOPREVWAPRICEPRCNT="6.56" WAPTOPREVWAPRICE="248.2" CLOSEPRICE="" MARKETPRICETODAY="4020" MARKETPRICE="3757.8" LASTTOPREVPRICE="0.8" NUMTRADES="207150" VOLTODAY="5643796" VALTODAY="22760795033" VALTODAY_USD="298831434" ETFSETTLEPRICE="" TRADINGSTATUS="T" UPDATETIME="22:23:59" ADMITTEDQUOTE="3951.6" LASTBID="" LASTOFFER="" LCLOSEPRICE="3951.6" LCURRENTPRICE="3977.6" MARKETPRICE2="4020" NUMBIDS="" NUMOFFERS="" CHANGE="31.8" TIME="22:23:56" HIGHBID="" LOWOFFER="" PRICEMINUSPREVWAPRICE="200.4" OPENPERIODPRICE="3911.6" SEQNUM="2721788" SYSTIME="2022-02-16 22:39:00" CLOSINGAUCTIONPRICE="3951.6" CLOSINGAUCTIONVOLUME="61344" ISSUECAPITALIZATION="1298439920790" ISSUECAPITALIZATION_UPDATETIME="22:38:57" ETFSETTLECURRENCY="" VALTODAY_RUR="22760795033" TRADINGSESSION="2" />
+    </rows>
+  </data>
+  <data id="dataversion">
+    <metadata>
+      <columns>
+        <column name="data_version" type="int32" />
+        <column name="seqnum" type="int64" />
+      </columns>
+    </metadata>
+    <rows>
+      <row data_version="6287" seqnum="2721654" />
+    </rows>
+  </data>
+  <data id="marketdata_yields">
+    <metadata>
+      <columns>
+        <column name="boardid" type="string" bytes="12" max_size="0" />
+        <column name="secid" type="string" bytes="36" max_size="0" />
+      </columns>
+    </metadata>
+    <rows></rows>
+  </data>
+</document>

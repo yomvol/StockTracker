@@ -21,12 +21,17 @@ namespace BondTracker.Views
     /// </summary>
     public partial class MainWindow : Window
     {
-        MainViewModel _main = new MainViewModel();
+        MainViewModel main_view_model;
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = _main;
-            InfoPanel.ItemsSource = _main.LoadDataOnStocksCollection();
+            main_view_model = new MainViewModel();
+            DataContext = main_view_model.manager;
+            Binding binding = new Binding("DebuggingMessage");
+            binding.Source = main_view_model;
+            binding.Mode = BindingMode.OneWay;
+            MessageLine.SetBinding(TextBlock.TextProperty, binding);
+            InfoPanel.ItemsSource = main_view_model.LoadDataOnStocksCollection();
         }
     }
 }
