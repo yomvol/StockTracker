@@ -13,7 +13,7 @@ namespace BondTracker.Models
         public string Message = "";
         public ManagerModel()
         {
-            this.StockChart = new PlotModel { Title = "YNDX" };
+            this.StockChart = new PlotModel { Title = "YNDX 2021-2022" };
             DateTime end = DateTime.Today.AddDays(-1.0); // I haven`t come up with an idea how to fetch info on today price yet
             DateTime start = end.AddYears(-1);
             double MinValue = DateTimeAxis.ToDouble(start);
