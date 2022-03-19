@@ -104,12 +104,14 @@ namespace BondTracker.Models
                     if (i == 0)
                     {
                         // Data earlier than starting date must be skipped
-                        DateTime dt = DateTime.ParseExact(reader.GetAttribute("TRADEDATE"), "yyyy-mm-dd", System.Globalization.CultureInfo.InvariantCulture);
-                        int result = DateTime.ParseExact(reader.GetAttribute("TRADEDATE"), "yyyy-mm-dd", System.Globalization.CultureInfo.InvariantCulture).CompareTo(StartDate);
+                        int result = DateTime.ParseExact(reader.GetAttribute("TRADEDATE"), "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture).CompareTo(StartDate);
                         while (result < 0)
                         {
                             if (reader.ReadToNextSibling("row"))
-                                result = DateTime.ParseExact(reader.GetAttribute("TRADEDATE"), "yyyy-mm-dd", System.Globalization.CultureInfo.InvariantCulture).CompareTo(StartDate);
+                            {
+                                DateTime dt = DateTime.ParseExact(reader.GetAttribute("TRADEDATE"), "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+                                result = dt.CompareTo(StartDate);
+                            }
                             else
                                 break;
                         }
@@ -122,7 +124,7 @@ namespace BondTracker.Models
                     double close_price_y;
                     while(reader.ReadToNextSibling("row"))
                     {
-                        date_x = DateTime.ParseExact(reader.GetAttribute("TRADEDATE"), "yyyy-mm-dd", System.Globalization.CultureInfo.InvariantCulture);
+                        date_x = DateTime.ParseExact(reader.GetAttribute("TRADEDATE"), "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
                         string str = reader.GetAttribute("CLOSE");
                         if (str != string.Empty)
                             close_price_y = Double.Parse(str, System.Globalization.CultureInfo.InvariantCulture);
